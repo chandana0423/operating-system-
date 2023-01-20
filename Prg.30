@@ -1,0 +1,188 @@
+#include <stdio.h>
+
+#include <pthread.h>
+
+        
+
+/*thread function definition*/
+
+void* threadFunction(void* args)
+
+{
+
+    while(1)
+
+    {
+
+        printf("I am threadFunction.\n");
+
+    }
+
+}
+
+int main()
+
+{
+
+    /*creating thread id*/
+
+    pthread_t id;
+
+    int ret;
+
+    
+
+    /*creating thread*/
+
+    ret=pthread_create(&id,NULL,&threadFunction,NULL);
+
+    if(ret==0){
+
+        printf("Thread created successfully.\n");
+
+    }
+
+    else{
+
+        printf("Thread not created.\n");
+
+        return 0; /*return from main*/
+
+    }
+
+    
+
+    while(1)
+
+    {
+
+        printf("I am main function.\n");      
+
+    }
+
+    
+
+    return 0;
+
+}
+
+// joining thread
+#include <pthread.h>    /* include file for pthreads - the 1st */
+
+#include <stdio.h>      /* include file for printf()           */
+
+void *Thread(void *string)
+
+{
+
+        int i;
+
+ 
+
+        /* writes five messages and exits */
+
+        for (i=0; i<5; i++)
+
+                printf("%s\n", (char *)string);
+
+        pthread_exit(NULL);
+
+}
+
+int main()
+
+{
+
+        char *e_str = "Hello!";
+
+        char *f_str = "Bonjour !";
+
+ 
+
+        pthread_attr_t attr;
+
+        pthread_t e_th;
+
+        pthread_t f_th;
+
+ 
+
+        int rc;
+
+        /* creates the right attribute */
+
+        pthread_attr_init(&attr);
+
+        pthread_attr_setdetachstate(&attr,
+
+                PTHREAD_CREATE_UNDETACHED);
+
+        /* creates both threads */
+
+        rc = pthread_create(&e_th, &attr, Thread, (void *)e_str);
+
+        if (rc)
+
+                exit(-1);
+
+        rc = pthread_create(&f_th, &attr, Thread, (void *)f_str);
+
+        if (rc)
+
+                exit(-1);
+
+        pthread_attr_destroy(&attr);
+
+        /* joins the threads */
+
+        pthread_join(e_th, NULL);
+
+        pthread_join(f_th, NULL);
+
+ 
+
+        pthread_exit(NULL);
+
+}
+//equal threads
+#include <stdio.h>
+
+#include <stdlib.h>
+
+#include <unistd.h>
+
+#include <sys/types.h>
+
+#include <pthread.h>
+
+pthread_t sample_thread;
+
+void* my_thread_function(void* p) {
+
+   if (pthread_equal(sample_thread, pthread_self())) { //pthread_self will return current thread id
+
+      printf("Threads are equal
+
+");
+
+   } else {
+
+      printf("Threads are not equal
+
+");
+ )
+)
+main() {
+
+   pthread_t th1;
+
+   sample_thread = th1; //assign the thread th1 to another thread object
+
+   pthread_create(&th1, NULL, my_thread_function, NULL); //create a thread using my thread function
+
+   pthread_join(th1, NULL); //wait for joining the thread with the main thread
+
+}
+
+
+    
